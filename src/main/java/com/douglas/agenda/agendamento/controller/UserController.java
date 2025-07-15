@@ -25,6 +25,7 @@ public class UserController {
         return ResponseEntity.ok(createdUser);
     }
 
+    // Listar todos os Usuários
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
         return ResponseEntity.ok(userService.findAll());

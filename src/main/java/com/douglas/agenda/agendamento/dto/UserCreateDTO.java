@@ -40,9 +40,4 @@ public class UserCreateDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    // Listar todos os Usuários
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> findAll(){
-        return ResponseEntity.ok(userService.findAll());
-    }
 }
