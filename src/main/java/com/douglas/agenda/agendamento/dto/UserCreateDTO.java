@@ -1,6 +1,12 @@
 package com.douglas.agenda.agendamento.dto;
 
+import com.douglas.agenda.agendamento.entities.User;
+import com.douglas.agenda.agendamento.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserCreateDTO {
 
@@ -32,5 +38,11 @@ public class UserCreateDTO {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    // Listar todos os Usuários
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll(){
+        return ResponseEntity.ok(userService.findAll());
     }
 }
