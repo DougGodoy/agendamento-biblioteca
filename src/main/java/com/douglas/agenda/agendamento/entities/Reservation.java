@@ -2,7 +2,7 @@ package com.douglas.agenda.agendamento.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reservations")
@@ -12,7 +12,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date startTime;
+    private LocalDateTime time;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,12 +30,12 @@ public class Reservation {
         this.id = id;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public User getUser() {
