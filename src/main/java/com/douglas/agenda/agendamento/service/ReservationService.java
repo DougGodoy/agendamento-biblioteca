@@ -10,6 +10,7 @@ import com.douglas.agenda.agendamento.repository.ReservationRepository;
 import com.douglas.agenda.agendamento.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,18 @@ public class ReservationService {
         //Busca Computador
         Computer computer = computerRepository.findById(dto.getComputerId())
                 .orElseThrow(() -> new RuntimeException("Computador não encontrado"));
+
+        // Verifica se o computador já está reservado no mesmo horário
+        List<Reservation> reservasNoHorario = reservationRepository.findByComputerAndTime(computer, dto.getTime());
+        if (!reservasNoHorario.isEmpty()) {
+            throw new RuntimeException("Este computador já está reservado neste horário.");
+        }
+        // Verifica se o usuário já tem 2 reservas no mesmo dia
+        LocalDate diaDaReserva = dto.getTime().toLocalDate();
+        List<Reservation> reservasDoUsuario = reservationRepository.findByUserAndDay(user.getId(), diaDaReserva);
+        if (reservasDoUsuario.size() >= 2) {
+            throw new RuntimeException("Usuário já possui 2 reservas neste dia.");
+        }
 
         //Cria Reserva
         Reservation reservation = new Reservation();
