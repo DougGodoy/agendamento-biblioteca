@@ -14,6 +14,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByComputerAndTime(Computer computer, LocalDateTime time);
 
-    @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId AND DATE(r.time) = :date")
-    List<Reservation> findByUserAndDay(@Param("userId") Long userId, @Param("date")LocalDate date);
+    @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId AND r.time BETWEEN :start AND :end")
+    List<Reservation> findByUserAndDay(@Param("userId") Long userId,
+                                       @Param("start") LocalDateTime start,
+                                       @Param("end") LocalDateTime end);
 }

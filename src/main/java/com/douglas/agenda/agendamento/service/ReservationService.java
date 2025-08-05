@@ -11,6 +11,7 @@ import com.douglas.agenda.agendamento.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,10 @@ public class ReservationService {
         }
         // Verifica se o usuário já tem 2 reservas no mesmo dia
         LocalDate diaDaReserva = dto.getTime().toLocalDate();
-        List<Reservation> reservasDoUsuario = reservationRepository.findByUserAndDay(user.getId(), diaDaReserva);
+        LocalDateTime startOfDay = diaDaReserva.atStartOfDay();
+        LocalDateTime endOfDay = diaDaReserva.atTime(23, 59, 59);
+
+        List<Reservation> reservasDoUsuario = reservationRepository.findByUserAndDay(user.getId(), startOfDay, endOfDay);
         if (reservasDoUsuario.size() >= 2) {
             throw new RuntimeException("Usuário já possui 2 reservas neste dia.");
         }
@@ -68,5 +72,12 @@ public class ReservationService {
     public List<ReservationDTO> findAll(){
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream().map(ReservationDTO::new).toList();
+    }
+
+    public void Delete(Long id){
+        if (!reservationRepository.existsById(id)){
+            throw new RuntimeException("Reserva não encontrada com ID: " + id);
+        }
+        reservationRepository.deleteById(id);
     }
 }
