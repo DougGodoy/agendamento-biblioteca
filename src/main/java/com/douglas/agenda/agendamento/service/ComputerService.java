@@ -5,6 +5,7 @@ import com.douglas.agenda.agendamento.entities.Computer;
 import com.douglas.agenda.agendamento.repository.ComputerRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,4 +28,10 @@ public class ComputerService {
         computer.setDescription(dto.getDescription());
         return repository.save(computer);
     }
+
+    public List<ComputerDTO> findAvailableAtTime(LocalDateTime time) {
+        List<Computer> computers = repository.findAvailableAtTime(time);
+        return computers.stream().map(ComputerDTO::new).toList();
+    }
+
 }
