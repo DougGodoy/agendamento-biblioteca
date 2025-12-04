@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Reservations from "./pages/Reservations";
-import NewBooking from "./pages/NewBooking";
+import NovoAgendamento from "./pages/NovoAgendamento";
+
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/computadores" element={<Home />} />
         <Route path="/reservas" element={<Reservations />} />
-        <Route path="/novo-agendamento" element={<NewBooking />} />
+        <Route path="/novo-agendamento" element={<NovoAgendamento />} />
       </Routes>
     </BrowserRouter>
   );
