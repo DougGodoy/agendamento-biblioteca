@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import NovoAgendamento from "./pages/NovoAgendamento";
+
 
 
 export default function NovoAgendamento() {
@@ -17,7 +17,11 @@ export default function NovoAgendamento() {
       try {
         const resUsers = await api.get("/users");
         const resComputers = await api.get("/computers");
-
+        if (Array.isArray(resComputers.data)) {
+          setComputers(resComputers.data);
+        } else {
+          setComputers([]);
+        }
         setUsers(resUsers.data);
         setComputers(resComputers.data);
       } catch (err) {
@@ -34,15 +38,23 @@ export default function NovoAgendamento() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
-      await api.post("/reservations", form);
+      const formattedTime = form.time + ":00";
+
+      await api.post("/reservations", {
+        ...form,
+        time: formattedTime
+      });
+
       alert("Reserva criada com sucesso!");
       setForm({ userId: "", computerId: "", time: "" });
     } catch (err) {
-      alert("Erro ao criar reserva!");
       console.error(err);
+      alert("Erro ao criar reserva!");
     }
   }
+
 
   return (
     <div style={{ padding: "20px" }}>
@@ -63,12 +75,14 @@ export default function NovoAgendamento() {
         <label>Computador:</label>
         <select name="computerId" value={form.computerId} onChange={handleChange}>
           <option value="">Selecione</option>
-          {computers.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
+          {Array.isArray(computers) &&
+            computers.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
         </select>
+
 
         <label>Data e horário:</label>
         <input

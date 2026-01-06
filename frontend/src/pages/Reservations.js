@@ -16,6 +16,22 @@ export default function Reservations() {
 
     loadReservations();
   }, []);
+  async function handleDelete(id) {
+    const confirm = window.confirm("Deseja cancelar esta reserva?");
+    if (!confirm) return;
+
+    try {
+      await api.delete(`/reservations/${id}`);
+      alert("Reserva cancelada com sucesso!");
+
+      // Atualiza a lista sem recarregar a página
+      setReservations(reservations.filter(r => r.id !== id));
+    } catch (error) {
+      alert("Erro ao cancelar reserva");
+      console.error(error);
+    }
+  }
+
 
   return (
     <div style={{ padding: "20px" }}>
@@ -31,6 +47,7 @@ export default function Reservations() {
               <th>Usuário</th>
               <th>Computador</th>
               <th>Horário</th>
+              <th>Ações</th>
             </tr>
           </thead>
 
@@ -41,6 +58,15 @@ export default function Reservations() {
                 <td>{r.userId}</td>
                 <td>{r.computerId}</td>
                 <td>{r.time}</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(r.id)}
+                    style={{ backgroundColor: "red", color: "white", border: "none", cursor: "pointer" }}
+                  >
+                    Cancelar
+                  </button>
+                </td>
+
               </tr>
             ))}
           </tbody>
