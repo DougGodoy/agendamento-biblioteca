@@ -12,11 +12,11 @@ public class ReservationDTO {
 
     public ReservationDTO (){}
 
-    public ReservationDTO (Reservation reservation){
-        this.id = reservation.getId();
-        this.userName = reservation.getUser().getName();
-        this.computerDescription = reservation.getComputer().getDescription();
-        this.time = reservation.getTime();
+    public ReservationDTO(Reservation entity) {
+        this.id = entity.getId();
+        this.userName = entity.getUser().getName();
+        this.computerDescription = entity.getComputer().getName();
+        this.time = entity.getTime();
     }
     
 

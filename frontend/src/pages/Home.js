@@ -45,7 +45,7 @@ export default function Home() {
                 <tr key={pc.id}>
                   <td>{pc.id}</td>
                   <td>{pc.name}</td>
-                  <td>{pc.available ? "Disponível" : "Reservado"}</td>
+                  <td>Disponível</td>
                 </tr>
               ))}
           </tbody>

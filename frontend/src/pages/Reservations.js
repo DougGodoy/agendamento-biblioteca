@@ -56,7 +56,7 @@ export default function Reservations() {
               <tr key={r.id}>
                 <td>{r.id}</td>
                 <td>{r.userId}</td>
-                <td>{r.computerId}</td>
+                <td>{r.userName}</td>
                 <td>{r.time}</td>
                 <td>
                   <button
