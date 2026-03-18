@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Reservations from "./pages/Reservations";
 import NovoAgendamento from "./pages/NovoAgendamento";
+import Computers from "./pages/Computers";
 
 
 export default function App() {
@@ -12,7 +13,7 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/computadores" element={<Home />} />
+        <Route path="/computadores" element={<Computers />} />
         <Route path="/reservas" element={<Reservations />} />
         <Route path="/novo-agendamento" element={<NovoAgendamento />} />
       </Routes>

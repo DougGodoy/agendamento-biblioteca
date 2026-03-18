@@ -17,13 +17,30 @@ export default function NovoAgendamento() {
       try {
         const resUsers = await api.get("/users");
         const resComputers = await api.get("/computers");
+
+        // USERS
+        if (Array.isArray(resUsers.data)) {
+          setUsers(resUsers.data);
+
+          // define usuário automático
+          if (resUsers.data.length > 0) {
+            setForm((prev) => ({
+              ...prev,
+              userId: resUsers.data[0].id,
+            }));
+          }
+
+        } else {
+          setUsers([]);
+        }
+
+        // COMPUTERS
         if (Array.isArray(resComputers.data)) {
           setComputers(resComputers.data);
         } else {
           setComputers([]);
         }
-        setUsers(resUsers.data);
-        setComputers(resComputers.data);
+
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
       }
@@ -31,6 +48,7 @@ export default function NovoAgendamento() {
 
     loadData();
   }, []);
+
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
